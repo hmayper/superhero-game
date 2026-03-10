@@ -82,21 +82,37 @@ class GitHubDirectIntegration:
             shutil.rmtree(self.temp_dir)
             print("🧹 Temporary directory cleaned up")
 
-# Example usage
-if __name__ == "__main__":
-    # Configuration
-    REPO_URL = "your-username/superhero-game"
-    ACCESS_TOKEN = "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"
-    
-    # Initialize integration
+# Configuration
+REPO_URL = "hmayper/superhero-game"
+ACCESS_TOKEN = "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"
+
+# Test the integration
+def test_integration():
+    """Test the GitHub integration"""
     integrator = GitHubDirectIntegration(REPO_URL, ACCESS_TOKEN)
     
     try:
-        # Update a file
-        test_content = "# Test file\nprint('Hello from Thaura!')\n"
-        integrator.update_file("test.py", test_content, "Add test file via Thaura")
+        # Test with a simple file
+        test_content = """# Test from Thaura Integration
+print('Hello from GitHub!')
+print('Integration test successful!')
+"""
         
-        # Push changes
-        integrator.push_changes()
+        success = integrator.update_file(
+            "test_integration.py", 
+            test_content, 
+            "Test GitHub integration"
+        )
+        
+        if success:
+            integrator.push_changes()
+            print("🎉 Integration test completed successfully!")
+        else:
+            print("❌ Integration test failed")
+            
     finally:
         integrator.cleanup()
+
+# Run test when script is executed
+if __name__ == "__main__":
+    test_integration()
